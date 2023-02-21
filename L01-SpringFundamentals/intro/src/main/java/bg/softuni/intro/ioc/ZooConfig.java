@@ -8,14 +8,20 @@ import org.springframework.context.annotation.Primary;
 public class ZooConfig {
 
 
-    @Bean
+    @Bean("cat")
     public Animal cat(){
         return new Cat();
     }
 
-    @Primary
-    @Bean
+
+    @Bean("normalDog")
     public Animal dog(){
         return new Dog();
+    }
+
+    @Bean("superDog")
+    public Animal superDog(){
+        //todo: add super powers
+        return new Dog(true);
     }
 }
