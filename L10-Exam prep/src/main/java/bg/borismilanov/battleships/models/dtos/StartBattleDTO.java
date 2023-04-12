@@ -1,6 +1,7 @@
 package bg.borismilanov.battleships.models.dtos;
 
-import javax.validation.constraints.Positive;
+
+import jakarta.validation.constraints.Positive;
 
 public class StartBattleDTO {
     @Positive
