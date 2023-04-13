@@ -13,7 +13,7 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private LoggedUser userSession;
+    private final LoggedUser userSession;
 
     public AuthService(UserRepository userRepository, LoggedUser userSession) {
         this.userRepository = userRepository;
@@ -35,10 +35,10 @@ public class AuthService {
             return false;
         }
 
-        User user  = new User();
+        User user = new User();
         user.setUsername(registrationDTO.getUsername());
-        user.setFullName(registrationDTO.getFullName());
         user.setEmail(registrationDTO.getEmail());
+        user.setFullName(registrationDTO.getFullName());
         user.setPassword(registrationDTO.getPassword());
 
         this.userRepository.save(user);
@@ -47,7 +47,6 @@ public class AuthService {
     }
 
     public boolean login(LoginDTO loginDTO) {
-
         Optional<User> user = this.userRepository
                 .findByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword());
 
@@ -58,5 +57,17 @@ public class AuthService {
         this.userSession.login(user.get());
 
         return true;
+    }
+
+    public void logout() {
+        this.userSession.logout();
+    }
+
+    public boolean isLoggedIn() {
+        return this.userSession.getId() > 0;
+    }
+
+    public long getLoggedUserId() {
+        return this.userSession.getId();
     }
 }
